@@ -21,6 +21,8 @@ namespace pkNX.Containers
 
         public void Initialize(Func<string, bool> filter = null)
         {
+            if (Paths.Count > 0)
+                return; // already initialized
             IEnumerable<string> files = Directory.GetFiles(FilePath, "*", SearchOption.AllDirectories);
             if (filter != null)
                 files = files.Where(filter);
@@ -61,7 +63,7 @@ namespace pkNX.Containers
             set
             {
                 if (value != null && Data[index] != null)
-                    TrackModify[index] = value.SequenceEqual(Data[index]);
+                    TrackModify[index] = !value.SequenceEqual(Data[index]);
                 Data[index] = value;
             }
         }
@@ -69,7 +71,13 @@ namespace pkNX.Containers
         public string GetFileName(int index) => Paths[index];
 
         public string FilePath { get; set; }
-        public bool Modified => TrackModify.Count != 0;
+
+        public bool Modified
+        {
+            get => TrackModify.Count(z => z) != 0;
+            set => CancelEdits();
+        }
+
         public int Count => Paths.Count;
 
         public Task<byte[][]> GetFiles() => Task.FromResult(Paths.Select(File.ReadAllBytes).ToArray());
@@ -87,6 +95,15 @@ namespace pkNX.Containers
                 if (data == null)
                     continue;
                 File.WriteAllBytes(Paths[i], data);
+            }
+        }
+
+        public void CancelEdits()
+        {
+            for (int i = 0; i < TrackModify.Count; i++)
+            {
+                TrackModify[i] = false;
+                Data[i] = null;
             }
         }
 
