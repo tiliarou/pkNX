@@ -1,16 +1,9 @@
 ﻿namespace pkNX.Structures
 {
-    public abstract class TrainerPoke
+    public abstract class TrainerPoke : StatPKM, IMoveset
     {
         protected byte[] Data;
 
-        public abstract int Species { get; set; }
-        public abstract int Form { get; set; }
-        public abstract int Level { get; set; }
-        public abstract int HeldItem { get; set; }
-        public abstract int Nature { get; set; }
-        public abstract int Gender { get; set; }
-        public abstract int Ability { get; set; }
         public abstract int Friendship { get; set; }
 
         public abstract bool Shiny { get; set; }
@@ -22,26 +15,6 @@
         public abstract int Move4 { get; set; }
 
         public abstract uint IV32 { get; set; }
-        public abstract int IV_HP { get; set; }
-        public abstract int IV_ATK { get; set; }
-        public abstract int IV_DEF { get; set; }
-        public abstract int IV_SPE { get; set; }
-        public abstract int IV_SPA { get; set; }
-        public abstract int IV_SPD { get; set; }
-
-        public abstract int EV_HP { get; set; }
-        public abstract int EV_ATK { get; set; }
-        public abstract int EV_DEF { get; set; }
-        public abstract int EV_SPA { get; set; }
-        public abstract int EV_SPD { get; set; }
-        public abstract int EV_SPE { get; set; }
-
-        public abstract int AV_HP { get; set; }
-        public abstract int AV_ATK { get; set; }
-        public abstract int AV_DEF { get; set; }
-        public abstract int AV_SPA { get; set; }
-        public abstract int AV_SPD { get; set; }
-        public abstract int AV_SPE { get; set; }
 
         public abstract int Rank { get; set; }
 
@@ -75,17 +48,6 @@
                 if (value?.Length != 6) return;
                 EV_HP = value[0]; EV_ATK = value[1]; EV_DEF = value[2];
                 EV_SPE = value[3]; EV_SPA = value[4]; EV_SPD = value[5];
-            }
-        }
-
-        public int[] AVs
-        {
-            get => new[] { AV_HP, AV_ATK, AV_DEF, AV_SPE, AV_SPA, AV_SPD };
-            set
-            {
-                if (value?.Length != 6) return;
-                AV_HP = value[0]; AV_ATK = value[1]; AV_DEF = value[2];
-                AV_SPE = value[3]; AV_SPA = value[4]; AV_SPD = value[5];
             }
         }
 

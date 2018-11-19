@@ -125,7 +125,21 @@ namespace pkNX.Game
 
         private static readonly TextReference[] GG =
         {
-
+            new TextReference("iteminfo.dat", TextName.ItemFlavor),
+            new TextReference("itemname.dat", TextName.ItemNames),
+            new TextReference("monsname.dat", TextName.SpeciesNames),
+            new TextReference("place_name.dat", TextName.metlist_000000),
+            new TextReference("seikaku.dat", TextName.Natures),
+            new TextReference("tokusei.dat", TextName.AbilityNames),
+            new TextReference("trname.dat", TextName.TrainerNames),
+            new TextReference("trtype.dat", TextName.TrainerClasses),
+            new TextReference("trmsg.dat", TextName.TrainerText),
+            new TextReference("typename.dat", TextName.Types),
+            new TextReference("wazainfo.dat", TextName.MoveFlavor),
+            new TextReference("wazaname.dat", TextName.MoveNames),
+            new TextReference("zkn_form.dat", TextName.Forms),
+            new TextReference("zkn_type.dat", TextName.SpeciesClassifications),
+            new TextReference("zukan_comment_A.dat", TextName.PokedexEntry1),
         };
     }
 }
