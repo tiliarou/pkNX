@@ -48,6 +48,58 @@ namespace pkNX.WinForms.Controls
             form.ShowDialog();
             if (!form.Modified)
                 editor.CancelEdits();
+            else
+                editor.Save();
+        }
+
+        public void EditPokémon()
+        {
+            var editor = new PokeEditor
+            {
+                Evolve = ROM.Data.EvolutionData,
+                Learn = ROM.Data.LevelUpData,
+                Mega = ROM.Data.MegaEvolutionData,
+                Personal = ROM.Data.PersonalData,
+
+            };
+            var form = new PokeDataUI(editor, ROM);
+            form.ShowDialog();
+            if (!form.Modified)
+                editor.CancelEdits();
+            else
+                editor.Save();
+        }
+
+        public void EditItems()
+        {
+            var obj = ROM.GetFilteredFolder(GameFile.ItemStats, z => new FileInfo(z).Length == 36);
+            var cache = new DataCache<Item>(obj)
+            {
+                Create = Item.FromBytes,
+                Write = item => item.Write(),
+            };
+            var form = new GenericEditor<Item>(cache, ROM.GetStrings(TextName.ItemNames), "Item Editor");
+            form.ShowDialog();
+            if (!form.Modified)
+                cache.CancelEdits();
+            else
+                cache.Save();
+        }
+
+        public void EditMoves()
+        {
+            var obj = ROM[GameFile.MoveStats]; // mini
+            var cache = new DataCache<Move7>(obj)
+            {
+                Create = data => new Move7(data),
+                Write = move => move.Write(),
+            };
+            var form = new GenericEditor<Move7>(cache, ROM.GetStrings(TextName.MoveNames), "Move Editor");
+            form.ShowDialog();
+            if (!form.Modified)
+                cache.CancelEdits();
+            else
+                cache.Save();
         }
     }
 }
