@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using pkNX.Game;
+using pkNX.Randomization;
 using pkNX.Sprites;
 using pkNX.Structures;
 using Util = pkNX.Randomization.Util;
@@ -13,8 +14,9 @@ namespace pkNX.WinForms
 {
     public partial class PokeDataUI : Form
     {
-        public PokeDataUI(PokeEditor editor, GameManager ROM)
+        public PokeDataUI(PokeEditor editor, GameManager rom)
         {
+            ROM = rom;
             Editor = editor;
             InitializeComponent();
 
@@ -47,8 +49,13 @@ namespace pkNX.WinForms
             InitMega(2);
 
             CB_Species.SelectedIndex = 1;
+
+            PG_Personal.SelectedObject = new PersonalRandSettings();
+            PG_Evolution.SelectedObject = new SpeciesSettings();
+            PG_Learn.SelectedObject = new LearnSettings();
         }
 
+        public GameManager ROM { get; set; }
         public PokeEditor Editor { get; set; }
         public bool Modified { get; set; }
 
@@ -423,6 +430,79 @@ namespace pkNX.WinForms
             var arr = Editor.Personal.Table;
             var result = TableUtil.GetNamedTypeTable(arr, entryNames, "Species");
             Clipboard.SetText(result);
+            System.Media.SystemSounds.Asterisk.Play();
+        }
+
+        private void B_RandPersonal_Click(object sender, EventArgs e)
+        {
+            SaveCurrent();
+            var settings = (PersonalRandSettings) PG_Personal.SelectedObject;
+            var rand = new PersonalRandomizer(Editor.Personal, ROM.Info, Editor.Evolve.LoadAll()) {Settings = settings};
+            rand.Execute();
+            LoadIndex(CB_Species.SelectedIndex);
+            System.Media.SystemSounds.Asterisk.Play();
+        }
+
+        private void B_RandEvo_Click(object sender, EventArgs e)
+        {
+            SaveCurrent();
+            var settings = (SpeciesSettings)PG_Evolution.SelectedObject;
+            settings.Gen2 = settings.Gen3 = settings.Gen4 = settings.Gen5 = settings.Gen6 = settings.Gen7 = false;
+            var rand = new EvolutionRandomizer(ROM.Info, Editor.Evolve.LoadAll(), Editor.Personal);
+            rand.Randomizer.Initialize(settings);
+            rand.Execute();
+            LoadIndex(CB_Species.SelectedIndex);
+            System.Media.SystemSounds.Asterisk.Play();
+        }
+
+        private void B_TradeEvo_Click(object sender, EventArgs e)
+        {
+            SaveCurrent();
+            var settings = (SpeciesSettings)PG_Evolution.SelectedObject;
+            settings.Gen2 = settings.Gen3 = settings.Gen4 = settings.Gen5 = settings.Gen6 = settings.Gen7 = false;
+            var rand = new EvolutionRandomizer(ROM.Info, Editor.Evolve.LoadAll(), Editor.Personal);
+            rand.Randomizer.Initialize(settings);
+            rand.ExecuteTrade();
+            LoadIndex(CB_Species.SelectedIndex);
+            System.Media.SystemSounds.Asterisk.Play();
+        }
+
+        private void B_RandLearn_Click(object sender, EventArgs e)
+        {
+            SaveCurrent();
+            var settings = (LearnSettings)PG_Learn.SelectedObject;
+            var rand = new LearnsetRandomizer(ROM.Info, Editor.Learn.LoadAll(), Editor.Personal);
+            var moves = ROM.Data.MoveData.LoadAll();
+            int[] banned = Legal.GetBannedMoves(ROM.Info.Game, moves);
+            rand.Initialize(moves, settings, banned);
+            rand.Execute();
+            LoadIndex(CB_Species.SelectedIndex);
+            System.Media.SystemSounds.Asterisk.Play();
+        }
+
+        private void B_LearnExpand_Click(object sender, EventArgs e)
+        {
+            var settings = (LearnSettings)PG_Learn.SelectedObject;
+            if (!settings.Expand)
+            {
+                WinFormsUtil.Error("Expand moves not selected. Please double check settings.",
+                    "Not expanding learnsets.");
+                return;
+            }
+            var rand = new LearnsetRandomizer(ROM.Info, Editor.Learn.LoadAll(), Editor.Personal);
+            rand.Initialize(ROM.Data.MoveData.LoadAll(), settings);
+            rand.ExecuteExpandOnly();
+            LoadIndex(CB_Species.SelectedIndex);
+            System.Media.SystemSounds.Asterisk.Play();
+        }
+
+        private void B_LearnMetronome_Click(object sender, EventArgs e)
+        {
+            var settings = (LearnSettings)PG_Learn.SelectedObject;
+            var rand = new LearnsetRandomizer(ROM.Info, Editor.Learn.LoadAll(), Editor.Personal);
+            rand.Initialize(ROM.Data.MoveData.LoadAll(), settings);
+            rand.ExecuteMetronome();
+            LoadIndex(CB_Species.SelectedIndex);
             System.Media.SystemSounds.Asterisk.Play();
         }
 

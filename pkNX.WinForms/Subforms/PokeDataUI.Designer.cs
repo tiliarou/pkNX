@@ -31,6 +31,7 @@
             this.B_Save = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Tab_Personal = new System.Windows.Forms.TabPage();
+            this.B_PDumpTable = new System.Windows.Forms.Button();
             this.L_GoID = new System.Windows.Forms.Label();
             this.MT_GoID = new System.Windows.Forms.MaskedTextBox();
             this.TB_RawColor = new System.Windows.Forms.TextBox();
@@ -119,14 +120,32 @@
             this.Tab_Evo = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Tab_Extra = new System.Windows.Forms.TabPage();
+            this.L_RandEnhance = new System.Windows.Forms.Label();
+            this.TC_Rand = new System.Windows.Forms.TabControl();
+            this.Tab_RStats = new System.Windows.Forms.TabPage();
+            this.B_RandPersonal = new System.Windows.Forms.Button();
+            this.PG_Personal = new System.Windows.Forms.PropertyGrid();
+            this.Tab_RLearn = new System.Windows.Forms.TabPage();
+            this.B_LearnMetronome = new System.Windows.Forms.Button();
+            this.B_LearnExpand = new System.Windows.Forms.Button();
+            this.B_RandLearn = new System.Windows.Forms.Button();
+            this.PG_Learn = new System.Windows.Forms.PropertyGrid();
+            this.Tab_REvo = new System.Windows.Forms.TabPage();
+            this.B_TradeEvo = new System.Windows.Forms.Button();
+            this.B_RandEvo = new System.Windows.Forms.Button();
+            this.PG_Evolution = new System.Windows.Forms.PropertyGrid();
             this.CB_Species = new System.Windows.Forms.ComboBox();
             this.PB_MonSprite = new System.Windows.Forms.PictureBox();
-            this.B_PDumpTable = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.Tab_Personal.SuspendLayout();
             this.Tab_Learn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.Tab_Evo.SuspendLayout();
+            this.Tab_Extra.SuspendLayout();
+            this.TC_Rand.SuspendLayout();
+            this.Tab_RStats.SuspendLayout();
+            this.Tab_RLearn.SuspendLayout();
+            this.Tab_REvo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PB_MonSprite)).BeginInit();
             this.SuspendLayout();
             //
@@ -244,6 +263,16 @@
             this.Tab_Personal.TabIndex = 0;
             this.Tab_Personal.Text = "Personal";
             this.Tab_Personal.UseVisualStyleBackColor = true;
+            //
+            // B_PDumpTable
+            //
+            this.B_PDumpTable.Location = new System.Drawing.Point(451, 492);
+            this.B_PDumpTable.Name = "B_PDumpTable";
+            this.B_PDumpTable.Size = new System.Drawing.Size(75, 23);
+            this.B_PDumpTable.TabIndex = 502;
+            this.B_PDumpTable.Text = "Dump Table";
+            this.B_PDumpTable.UseVisualStyleBackColor = true;
+            this.B_PDumpTable.Click += new System.EventHandler(this.B_PDumpTable_Click);
             //
             // L_GoID
             //
@@ -1084,6 +1113,8 @@
             //
             // Tab_Extra
             //
+            this.Tab_Extra.Controls.Add(this.L_RandEnhance);
+            this.Tab_Extra.Controls.Add(this.TC_Rand);
             this.Tab_Extra.Location = new System.Drawing.Point(4, 22);
             this.Tab_Extra.Name = "Tab_Extra";
             this.Tab_Extra.Padding = new System.Windows.Forms.Padding(3);
@@ -1091,6 +1122,153 @@
             this.Tab_Extra.TabIndex = 3;
             this.Tab_Extra.Text = "Enhancements";
             this.Tab_Extra.UseVisualStyleBackColor = true;
+            //
+            // L_RandEnhance
+            //
+            this.L_RandEnhance.AutoSize = true;
+            this.L_RandEnhance.Location = new System.Drawing.Point(9, 8);
+            this.L_RandEnhance.Name = "L_RandEnhance";
+            this.L_RandEnhance.Size = new System.Drawing.Size(116, 13);
+            this.L_RandEnhance.TabIndex = 1;
+            this.L_RandEnhance.Text = "Randomization Options";
+            //
+            // TC_Rand
+            //
+            this.TC_Rand.Controls.Add(this.Tab_RStats);
+            this.TC_Rand.Controls.Add(this.Tab_RLearn);
+            this.TC_Rand.Controls.Add(this.Tab_REvo);
+            this.TC_Rand.Location = new System.Drawing.Point(8, 24);
+            this.TC_Rand.Name = "TC_Rand";
+            this.TC_Rand.SelectedIndex = 0;
+            this.TC_Rand.Size = new System.Drawing.Size(428, 488);
+            this.TC_Rand.TabIndex = 0;
+            //
+            // Tab_RStats
+            //
+            this.Tab_RStats.Controls.Add(this.B_RandPersonal);
+            this.Tab_RStats.Controls.Add(this.PG_Personal);
+            this.Tab_RStats.Location = new System.Drawing.Point(4, 22);
+            this.Tab_RStats.Name = "Tab_RStats";
+            this.Tab_RStats.Padding = new System.Windows.Forms.Padding(3);
+            this.Tab_RStats.Size = new System.Drawing.Size(420, 462);
+            this.Tab_RStats.TabIndex = 1;
+            this.Tab_RStats.Text = "Randomize Personal";
+            this.Tab_RStats.UseVisualStyleBackColor = true;
+            //
+            // B_RandPersonal
+            //
+            this.B_RandPersonal.Location = new System.Drawing.Point(6, 80);
+            this.B_RandPersonal.Name = "B_RandPersonal";
+            this.B_RandPersonal.Size = new System.Drawing.Size(75, 23);
+            this.B_RandPersonal.TabIndex = 1;
+            this.B_RandPersonal.Text = "Randomize";
+            this.B_RandPersonal.UseVisualStyleBackColor = true;
+            this.B_RandPersonal.Click += new System.EventHandler(this.B_RandPersonal_Click);
+            //
+            // PG_Personal
+            //
+            this.PG_Personal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PG_Personal.Location = new System.Drawing.Point(6, 109);
+            this.PG_Personal.Name = "PG_Personal";
+            this.PG_Personal.Size = new System.Drawing.Size(411, 350);
+            this.PG_Personal.TabIndex = 0;
+            //
+            // Tab_RLearn
+            //
+            this.Tab_RLearn.Controls.Add(this.B_LearnMetronome);
+            this.Tab_RLearn.Controls.Add(this.B_LearnExpand);
+            this.Tab_RLearn.Controls.Add(this.B_RandLearn);
+            this.Tab_RLearn.Controls.Add(this.PG_Learn);
+            this.Tab_RLearn.Location = new System.Drawing.Point(4, 22);
+            this.Tab_RLearn.Name = "Tab_RLearn";
+            this.Tab_RLearn.Size = new System.Drawing.Size(420, 462);
+            this.Tab_RLearn.TabIndex = 2;
+            this.Tab_RLearn.Text = "Randomize Learn";
+            this.Tab_RLearn.UseVisualStyleBackColor = true;
+            //
+            // B_LearnMetronome
+            //
+            this.B_LearnMetronome.Location = new System.Drawing.Point(228, 80);
+            this.B_LearnMetronome.Name = "B_LearnMetronome";
+            this.B_LearnMetronome.Size = new System.Drawing.Size(135, 23);
+            this.B_LearnMetronome.TabIndex = 5;
+            this.B_LearnMetronome.Text = "Metronome Mode";
+            this.B_LearnMetronome.UseVisualStyleBackColor = true;
+            this.B_LearnMetronome.Click += new System.EventHandler(this.B_LearnMetronome_Click);
+            //
+            // B_LearnExpand
+            //
+            this.B_LearnExpand.Location = new System.Drawing.Point(87, 80);
+            this.B_LearnExpand.Name = "B_LearnExpand";
+            this.B_LearnExpand.Size = new System.Drawing.Size(135, 23);
+            this.B_LearnExpand.TabIndex = 4;
+            this.B_LearnExpand.Text = "Expand Movepools";
+            this.B_LearnExpand.UseVisualStyleBackColor = true;
+            this.B_LearnExpand.Click += new System.EventHandler(this.B_LearnExpand_Click);
+            //
+            // B_RandLearn
+            //
+            this.B_RandLearn.Location = new System.Drawing.Point(6, 80);
+            this.B_RandLearn.Name = "B_RandLearn";
+            this.B_RandLearn.Size = new System.Drawing.Size(75, 23);
+            this.B_RandLearn.TabIndex = 3;
+            this.B_RandLearn.Text = "Randomize";
+            this.B_RandLearn.UseVisualStyleBackColor = true;
+            this.B_RandLearn.Click += new System.EventHandler(this.B_RandLearn_Click);
+            //
+            // PG_Learn
+            //
+            this.PG_Learn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PG_Learn.Location = new System.Drawing.Point(6, 109);
+            this.PG_Learn.Name = "PG_Learn";
+            this.PG_Learn.Size = new System.Drawing.Size(411, 350);
+            this.PG_Learn.TabIndex = 2;
+            //
+            // Tab_REvo
+            //
+            this.Tab_REvo.Controls.Add(this.B_TradeEvo);
+            this.Tab_REvo.Controls.Add(this.B_RandEvo);
+            this.Tab_REvo.Controls.Add(this.PG_Evolution);
+            this.Tab_REvo.Location = new System.Drawing.Point(4, 22);
+            this.Tab_REvo.Name = "Tab_REvo";
+            this.Tab_REvo.Size = new System.Drawing.Size(420, 462);
+            this.Tab_REvo.TabIndex = 3;
+            this.Tab_REvo.Text = "Randomize Evo";
+            this.Tab_REvo.UseVisualStyleBackColor = true;
+            //
+            // B_TradeEvo
+            //
+            this.B_TradeEvo.Location = new System.Drawing.Point(87, 80);
+            this.B_TradeEvo.Name = "B_TradeEvo";
+            this.B_TradeEvo.Size = new System.Drawing.Size(180, 23);
+            this.B_TradeEvo.TabIndex = 4;
+            this.B_TradeEvo.Text = "Replace Trade Evolutions";
+            this.B_TradeEvo.UseVisualStyleBackColor = true;
+            this.B_TradeEvo.Click += new System.EventHandler(this.B_TradeEvo_Click);
+            //
+            // B_RandEvo
+            //
+            this.B_RandEvo.Location = new System.Drawing.Point(6, 80);
+            this.B_RandEvo.Name = "B_RandEvo";
+            this.B_RandEvo.Size = new System.Drawing.Size(75, 23);
+            this.B_RandEvo.TabIndex = 3;
+            this.B_RandEvo.Text = "Randomize";
+            this.B_RandEvo.UseVisualStyleBackColor = true;
+            this.B_RandEvo.Click += new System.EventHandler(this.B_RandEvo_Click);
+            //
+            // PG_Evolution
+            //
+            this.PG_Evolution.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PG_Evolution.Location = new System.Drawing.Point(6, 109);
+            this.PG_Evolution.Name = "PG_Evolution";
+            this.PG_Evolution.Size = new System.Drawing.Size(411, 350);
+            this.PG_Evolution.TabIndex = 2;
             //
             // CB_Species
             //
@@ -1111,16 +1289,6 @@
             this.PB_MonSprite.TabIndex = 91;
             this.PB_MonSprite.TabStop = false;
             //
-            // B_PDumpTable
-            //
-            this.B_PDumpTable.Location = new System.Drawing.Point(451, 492);
-            this.B_PDumpTable.Name = "B_PDumpTable";
-            this.B_PDumpTable.Size = new System.Drawing.Size(75, 23);
-            this.B_PDumpTable.TabIndex = 502;
-            this.B_PDumpTable.Text = "Dump Table";
-            this.B_PDumpTable.UseVisualStyleBackColor = true;
-            this.B_PDumpTable.Click += new System.EventHandler(this.B_PDumpTable_Click);
-            //
             // PokeDataUI
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1140,6 +1308,12 @@
             this.Tab_Learn.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.Tab_Evo.ResumeLayout(false);
+            this.Tab_Extra.ResumeLayout(false);
+            this.Tab_Extra.PerformLayout();
+            this.TC_Rand.ResumeLayout(false);
+            this.Tab_RStats.ResumeLayout(false);
+            this.Tab_RLearn.ResumeLayout(false);
+            this.Tab_REvo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PB_MonSprite)).EndInit();
             this.ResumeLayout(false);
 
@@ -1241,5 +1415,19 @@
         private System.Windows.Forms.PictureBox PB_MonSprite;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button B_PDumpTable;
+        private System.Windows.Forms.TabControl TC_Rand;
+        private System.Windows.Forms.TabPage Tab_RStats;
+        private System.Windows.Forms.Label L_RandEnhance;
+        private System.Windows.Forms.TabPage Tab_RLearn;
+        private System.Windows.Forms.TabPage Tab_REvo;
+        private System.Windows.Forms.PropertyGrid PG_Personal;
+        private System.Windows.Forms.Button B_RandPersonal;
+        private System.Windows.Forms.Button B_RandEvo;
+        private System.Windows.Forms.PropertyGrid PG_Evolution;
+        private System.Windows.Forms.Button B_TradeEvo;
+        private System.Windows.Forms.Button B_RandLearn;
+        private System.Windows.Forms.PropertyGrid PG_Learn;
+        private System.Windows.Forms.Button B_LearnExpand;
+        private System.Windows.Forms.Button B_LearnMetronome;
     }
 }

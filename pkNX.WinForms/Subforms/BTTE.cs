@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using pkNX.Game;
+using pkNX.Randomization;
 using pkNX.Structures;
 using pkNX.Sprites;
 
@@ -14,6 +15,7 @@ namespace pkNX.WinForms
 {
     public partial class BTTE : Form
     {
+        private readonly LearnsetRandomizer learn;
         private string[][] AltForms;
         private int entry = -1;
         private PictureBox[] pba;
@@ -40,6 +42,7 @@ namespace pkNX.WinForms
             Stats.Personal = Personal = game.Data.PersonalData;
             Game = game;
             Trainers = editor;
+            learn = new LearnsetRandomizer(game.Info, game.Data.LevelUpData.LoadAll(), Personal);
 
             trClass = Game.GetStrings(TextName.TrainerClasses);
             trName = Game.GetStrings(TextName.TrainerClasses);
@@ -63,6 +66,18 @@ namespace pkNX.WinForms
                 pb.Click += ClickSlot;
 
             CB_TrainerID.SelectedIndex = 0;
+
+            PG_Moves.SelectedObject = new MovesetRandSettings();
+            PG_RTrainer.SelectedObject = new TrainerRandSettings();
+            PG_Species.SelectedObject = new SpeciesSettings
+            {
+                Gen2 = false,
+                Gen3 = false,
+                Gen4 = false,
+                Gen5 = false,
+                Gen6 = false,
+                Gen7 = false,
+            };
         }
 
         public bool Modified { get; set; }
@@ -492,8 +507,8 @@ namespace pkNX.WinForms
             pkm.Species = CB_Species.SelectedIndex;
             pkm.Level = (int)NUD_Level.Value;
             pkm.Form = CB_Forme.SelectedIndex;
-            //var moves = learn.GetHighPoweredMoves(pkm.Species, pkm.Form, 4);
-            //SetMoves(moves);
+            var moves = learn.GetHighPoweredMoves(pkm.Species, pkm.Form, 4);
+            SetMoves(moves);
         }
 
         private void B_CurrentAttack_Click(object sender, EventArgs e)
@@ -501,8 +516,8 @@ namespace pkNX.WinForms
             pkm.Species = CB_Species.SelectedIndex;
             pkm.Level = (int)NUD_Level.Value;
             pkm.Form = CB_Forme.SelectedIndex;
-            //var moves = learn.GetCurrentMoves(pkm.Species, pkm.Form, pkm.Level, 4);
-            //SetMoves(moves);
+            var moves = learn.GetCurrentMoves(pkm.Species, pkm.Form, pkm.Level, 4);
+            SetMoves(moves);
         }
 
         private void B_Clear_Click(object sender, EventArgs e) => SetMoves(new int[4]);
@@ -518,6 +533,29 @@ namespace pkNX.WinForms
         {
             Modified = true;
             Close();
+        }
+
+        private void B_Randomize_Click(object sender, EventArgs e)
+        {
+            SaveEntry();
+            var moves = Game.Data.MoveData.LoadAll();
+            var rmove = new MoveRandomizer(Game.Info, moves, Personal);
+            int[] banned = Legal.GetBannedMoves(Game.Info.Game, moves);
+            rmove.Initialize((MovesetRandSettings)PG_Moves.SelectedObject, banned);
+            var rspec = new SpeciesRandomizer(Game.Info, Personal);
+            rspec.Initialize((SpeciesSettings)PG_Species.SelectedObject);
+            var trand = new TrainerRandomizer(Game.Info, Personal, Trainers.LoadAll())
+            {
+                ClassCount = CB_Trainer_Class.Items.Count,
+                Learn = learn,
+                RandMove = rmove,
+                RandSpec = rspec,
+                GetBlank = () => new TrainerPoke7b(), // this should probably be less specific
+            };
+            trand.Initialize((TrainerRandSettings)PG_RTrainer.SelectedObject);
+            trand.Execute();
+            LoadEntry();
+            System.Media.SystemSounds.Asterisk.Play();
         }
     }
 
