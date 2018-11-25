@@ -67,17 +67,9 @@ namespace pkNX.WinForms
 
             CB_TrainerID.SelectedIndex = 0;
 
-            PG_Moves.SelectedObject = new MovesetRandSettings();
-            PG_RTrainer.SelectedObject = new TrainerRandSettings();
-            PG_Species.SelectedObject = new SpeciesSettings
-            {
-                Gen2 = false,
-                Gen3 = false,
-                Gen4 = false,
-                Gen5 = false,
-                Gen6 = false,
-                Gen7 = false,
-            };
+            PG_Moves.SelectedObject = EditUtil.Settings.Move;
+            PG_RTrainer.SelectedObject = EditUtil.Settings.Trainer;
+            PG_Species.SelectedObject = EditUtil.Settings.Species;
         }
 
         public bool Modified { get; set; }
