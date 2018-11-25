@@ -46,6 +46,12 @@
             this.Tab_Sky = new System.Windows.Forms.TabPage();
             this.EL_Sky = new pkNX.WinForms.EncounterList();
             this.Tab_Rand = new System.Windows.Forms.TabPage();
+            this.CHK_ForceType = new System.Windows.Forms.CheckBox();
+            this.CHK_WildMega = new System.Windows.Forms.CheckBox();
+            this.L_SpawnDuration = new System.Windows.Forms.Label();
+            this.L_SpawnCount = new System.Windows.Forms.Label();
+            this.L_SpawnRate = new System.Windows.Forms.Label();
+            this.CHK_FillEmpty = new System.Windows.Forms.CheckBox();
             this.B_RandAll = new System.Windows.Forms.Button();
             this.PG_Species = new System.Windows.Forms.PropertyGrid();
             this.NUD_ModDuration = new System.Windows.Forms.NumericUpDown();
@@ -233,6 +239,12 @@
             //
             // Tab_Rand
             //
+            this.Tab_Rand.Controls.Add(this.CHK_ForceType);
+            this.Tab_Rand.Controls.Add(this.CHK_WildMega);
+            this.Tab_Rand.Controls.Add(this.L_SpawnDuration);
+            this.Tab_Rand.Controls.Add(this.L_SpawnCount);
+            this.Tab_Rand.Controls.Add(this.L_SpawnRate);
+            this.Tab_Rand.Controls.Add(this.CHK_FillEmpty);
             this.Tab_Rand.Controls.Add(this.B_RandAll);
             this.Tab_Rand.Controls.Add(this.PG_Species);
             this.Tab_Rand.Controls.Add(this.NUD_ModDuration);
@@ -249,17 +261,75 @@
             this.Tab_Rand.Text = "Rand";
             this.Tab_Rand.UseVisualStyleBackColor = true;
             //
+            // checkBox1
+            //
+            this.CHK_ForceType.Checked = true;
+            this.CHK_ForceType.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CHK_ForceType.Location = new System.Drawing.Point(182, 105);
+            this.CHK_ForceType.Name = "CHK_ForceType";
+            this.CHK_ForceType.Size = new System.Drawing.Size(125, 31);
+            this.CHK_ForceType.TabIndex = 13;
+            this.CHK_ForceType.Text = "Force At Least 1 Water/Grass Viridian";
+            this.CHK_ForceType.UseVisualStyleBackColor = true;
+            //
+            // CHK_WildMega
+            //
+            this.CHK_WildMega.AutoSize = true;
+            this.CHK_WildMega.Location = new System.Drawing.Point(80, 119);
+            this.CHK_WildMega.Name = "CHK_WildMega";
+            this.CHK_WildMega.Size = new System.Drawing.Size(82, 17);
+            this.CHK_WildMega.TabIndex = 12;
+            this.CHK_WildMega.Text = "Wild Megas";
+            this.CHK_WildMega.UseVisualStyleBackColor = true;
+            //
+            // L_SpawnDuration
+            //
+            this.L_SpawnDuration.AutoSize = true;
+            this.L_SpawnDuration.Location = new System.Drawing.Point(202, 77);
+            this.L_SpawnDuration.Name = "L_SpawnDuration";
+            this.L_SpawnDuration.Size = new System.Drawing.Size(47, 13);
+            this.L_SpawnDuration.TabIndex = 11;
+            this.L_SpawnDuration.Text = "seconds";
+            //
+            // L_SpawnCount
+            //
+            this.L_SpawnCount.AutoSize = true;
+            this.L_SpawnCount.Location = new System.Drawing.Point(202, 13);
+            this.L_SpawnCount.Name = "L_SpawnCount";
+            this.L_SpawnCount.Size = new System.Drawing.Size(112, 13);
+            this.L_SpawnCount.TabIndex = 10;
+            this.L_SpawnCount.Text = "Max overworld models";
+            //
+            // L_SpawnRate
+            //
+            this.L_SpawnRate.AutoSize = true;
+            this.L_SpawnRate.Location = new System.Drawing.Point(202, 45);
+            this.L_SpawnRate.Name = "L_SpawnRate";
+            this.L_SpawnRate.Size = new System.Drawing.Size(15, 13);
+            this.L_SpawnRate.TabIndex = 9;
+            this.L_SpawnRate.Text = "%";
+            //
+            // CHK_FillEmpty
+            //
+            this.CHK_FillEmpty.AutoSize = true;
+            this.CHK_FillEmpty.Location = new System.Drawing.Point(80, 105);
+            this.CHK_FillEmpty.Name = "CHK_FillEmpty";
+            this.CHK_FillEmpty.Size = new System.Drawing.Size(96, 17);
+            this.CHK_FillEmpty.TabIndex = 8;
+            this.CHK_FillEmpty.Text = "Fill Empty Slots";
+            this.CHK_FillEmpty.UseVisualStyleBackColor = true;
+            //
             // B_RandAll
             //
-            this.B_RandAll.Location = new System.Drawing.Point(6, 110);
+            this.B_RandAll.Location = new System.Drawing.Point(6, 102);
             this.B_RandAll.Name = "B_RandAll";
-            this.B_RandAll.Size = new System.Drawing.Size(142, 26);
+            this.B_RandAll.Size = new System.Drawing.Size(68, 34);
             this.B_RandAll.TabIndex = 7;
             this.B_RandAll.Text = "Randomize All Species";
             this.B_RandAll.UseVisualStyleBackColor = true;
             this.B_RandAll.Click += new System.EventHandler(this.B_RandAll_Click);
             //
-            // propertyGrid1
+            // PG_Species
             //
             this.PG_Species.Location = new System.Drawing.Point(0, 142);
             this.PG_Species.Name = "PG_Species";
@@ -278,6 +348,11 @@
             this.NUD_ModDuration.Name = "NUD_ModDuration";
             this.NUD_ModDuration.Size = new System.Drawing.Size(47, 20);
             this.NUD_ModDuration.TabIndex = 5;
+            this.NUD_ModDuration.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             //
             // NUD_ModRate
             //
@@ -384,6 +459,7 @@
             this.Tab_Super.ResumeLayout(false);
             this.Tab_Sky.ResumeLayout(false);
             this.Tab_Rand.ResumeLayout(false);
+            this.Tab_Rand.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_ModDuration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_ModRate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_ModCount)).EndInit();
@@ -421,5 +497,11 @@
         private System.Windows.Forms.Button B_ModDuration;
         private System.Windows.Forms.Button B_ModRate;
         private System.Windows.Forms.Button B_ModSpawn;
+        private System.Windows.Forms.CheckBox CHK_FillEmpty;
+        private System.Windows.Forms.Label L_SpawnDuration;
+        private System.Windows.Forms.Label L_SpawnCount;
+        private System.Windows.Forms.Label L_SpawnRate;
+        private System.Windows.Forms.CheckBox CHK_WildMega;
+        private System.Windows.Forms.CheckBox CHK_ForceType;
     }
 }

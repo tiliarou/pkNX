@@ -19,7 +19,6 @@ namespace pkNX.Randomization
         public SpeciesRandomizer RandSpec { get; set; }
         public MoveRandomizer RandMove { get; set; }
         public int ClassCount { get; set; }
-        public IList<int> BannedMoves { get; set; }
         public Func<TrainerPoke> GetBlank { get; set; }
         public IList<int> FinalEvo { get; set; } = Array.Empty<int>();
 
@@ -38,15 +37,6 @@ namespace pkNX.Randomization
         }
 
         public void Initialize(TrainerRandSettings settings) => Settings = settings;
-
-        public void SetBannedMoves(int[] moves)
-        {
-            var list = new List<int>(moves);
-            list.AddRange(new[] { 165, 621, 464 }.Concat(Legal.Z_Moves)); // Struggle, Hyperspace Fury, Dark Void
-            if (Settings.BanFixedDamageMoves)
-                list.AddRange(MoveRandomizer.FixedDamageMoves);
-            BannedMoves = list;
-        }
 
         public override void Execute()
         {
@@ -155,7 +145,7 @@ namespace pkNX.Randomization
                 {
                     pk.Species = RandSpec.GetRandomSpeciesType(pk.Species, Type);
                     pk.HeldItem = PossibleHeldItems[Util.Random.Next(PossibleHeldItems.Length)];
-                    pk.Form = Legal.GetRandomForme(pk.Species, Settings.AllowRandomMegaForms, true, Personal.Table);
+                    pk.Form = Legal.GetRandomForme(pk.Species, Settings.AllowRandomMegaForms, true, Personal);
                 }
 
                 pk.Gender = 0; // random
@@ -167,7 +157,7 @@ namespace pkNX.Randomization
                 int randFinalEvo() => Util.Random.Next(FinalEvo.Count);
                 if (FinalEvo.Count != 0)
                     pk.Species = FinalEvo[randFinalEvo()];
-                pk.Form = Legal.GetRandomForme(pk.Species, Settings.AllowRandomMegaForms, true, Personal.Table);
+                pk.Form = Legal.GetRandomForme(pk.Species, Settings.AllowRandomMegaForms, true, Personal);
             }
         }
 
