@@ -41,6 +41,7 @@ namespace pkNX
 
         protected void OpenBinary(string path)
         {
+            path = FileMitm.GetRedirectedReadPath(path);
             Stream = new FileStream(path, FileMode.Open);
             Reader = new BinaryReader(Stream);
             Initialize();
@@ -117,6 +118,7 @@ namespace pkNX
             bool sameLocation = path == FilePath && Reader != null;
             var writePath = sameLocation ? Path.GetTempFileName() : path;
 
+            path = FileMitm.GetRedirectedWritePath(path);
             var stream = new FileStream(path, FileMode.CreateNew);
             using (var bw = new BinaryWriter(stream))
                 await Pack(bw, handler, token).ConfigureAwait(false);
