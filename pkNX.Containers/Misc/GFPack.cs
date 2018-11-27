@@ -264,11 +264,14 @@ namespace pkNX.Containers
         {
             bw.Write(Header.ToBytesClass());
             Header.PtrHashPaths = bw.BaseStream.Position;
-            bw.Write(HashPaths.ToBytesClass());
+            foreach (var hp in HashPaths)
+                bw.Write(hp.ToBytesClass());
             Header.PtrHashIndexes = bw.BaseStream.Position;
-            bw.Write(HashIndexes.ToBytesClass());
+            foreach (var hi in HashIndexes)
+                bw.Write(hi.ToBytesClass());
             Header.PtrFileTable = bw.BaseStream.Position;
-            bw.Write(FileTable.ToBytesClass());
+            foreach (var ft in FileTable)
+                bw.Write(ft.ToBytesClass());
         }
 
         public string FilePath { get; set; }
@@ -276,7 +279,7 @@ namespace pkNX.Containers
         public Task<byte[][]> GetFiles() => Task.FromResult(DecompressedFiles);
         public Task<byte[]> GetFile(int file, int subFile = 0) => Task.FromResult(this[file]);
         public Task SetFile(int file, byte[] value, int subFile = 0) => Task.FromResult(this[file] = value);
-        public Task SaveAs(string path, ContainerHandler handler, CancellationToken token) => new Task(() => Dump(path, handler), token);
+        public Task SaveAs(string path, ContainerHandler handler, CancellationToken token) => new Task(() => FileMitm.WriteAllBytes(path, Write()), token);
 
         public void Dump(string path, ContainerHandler handler)
         {
