@@ -45,7 +45,6 @@ namespace pkNX.WinForms
             Tables = obj;
             LoadFile(locs);
 
-
             EL_Ground.ShowForm = false;
             EL_Water.ShowForm = false;
             EL_Old.ShowForm = false;
@@ -344,7 +343,7 @@ namespace pkNX.WinForms
             var settings = (SpeciesSettings)PG_Species.SelectedObject;
             settings.Gen2 = settings.Gen3 = settings.Gen4 = settings.Gen5 = settings.Gen6 = settings.Gen7 = false;
             var rand = new SpeciesRandomizer(ROM.Info, ROM.Data.PersonalData);
-            rand.Initialize(settings);
+            rand.Initialize(settings, 808, 809);
             RandomizeWild(rand, CHK_FillEmpty.Checked);
             LoadEntry(entry);
             System.Media.SystemSounds.Asterisk.Play();
@@ -382,7 +381,7 @@ namespace pkNX.WinForms
                     }
 
                     s.Species = rand.GetRandomSpecies(s.Species);
-                    s.Form = Legal.GetRandomForme(s.Species, false, false, pt); // mega & alolan forms don't spawn :(
+                    s.Form = 0; // mega & alolan forms don't spawn :(
                     if (fill)
                         s.Probability = RandomScaledRates[slots.Count][i];
                 }
