@@ -16,7 +16,7 @@ namespace pkNX.Randomization
         private readonly IList<int> SpecialClasses;
         private readonly IList<int> CrashClasses;
 
-        public GenericRandomizer Class { get; set; }
+        public GenericRandomizer<int> Class { get; set; }
         public LearnsetRandomizer Learn { get; set; }
         public SpeciesRandomizer RandSpec { get; set; }
         public MoveRandomizer RandMove { get; set; }
@@ -46,7 +46,7 @@ namespace pkNX.Randomization
             IEnumerable<int> classes = Enumerable.Range(0, ClassCount).Except(CrashClasses);
             if (Settings.SkipSpecialClasses)
                 classes = classes.Except(SpecialClasses);
-            Class = new GenericRandomizer(classes.ToArray());
+            Class = new GenericRandomizer<int>(classes.ToArray());
         }
 
         public override void Execute()
@@ -235,7 +235,15 @@ namespace pkNX.Randomization
             return megas.Values.ElementAt(rnd);
         }
 
+        // 1 poke max
         private static readonly int[] royal = { 081, 082, 083, 084, 185 };
+
+        // 3 poke max
+        private static readonly int[] doubleTrainer =
+        {
+            007, 008, 020, 021, 024, 025, 028, 029, 032, 033, 050, 051, // jesse&james
+            30, 31, // rival vs archer
+        };
 
         private static Dictionary<int, int> GetFixedCountIndexes(GameVersion game)
         {
@@ -248,7 +256,7 @@ namespace pkNX.Randomization
             if (GameVersion.USUM.Contains(game))
                 return Legal.ImportantTrainers_USUM.Concat(royal).ToDictionary(z => z, index => royal.Contains(index) ? 1 : 6);
             if (GameVersion.GG.Contains(game))
-                return Legal.ImportantTrainers_GG.ToDictionary(z => z, _ => 6);
+                return Legal.ImportantTrainers_GG.ToDictionary(z => z, index => doubleTrainer.Contains(index) ? 3 : 6);
             return new Dictionary<int, int>();
         }
 

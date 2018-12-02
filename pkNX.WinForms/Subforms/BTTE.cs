@@ -55,6 +55,7 @@ namespace pkNX.WinForms
             natures = Game.GetStrings(TextName.Natures);
             trName = Game.GetStrings(TextName.TrainerNames);
             trClass = Game.GetStrings(TextName.TrainerClasses);
+            movelist = EditorUtil.SanitizeMoveList(movelist);
 
             AIBits = new[] {CHK_AI0, CHK_AI1, CHK_AI2, CHK_AI3, CHK_AI4, CHK_AI5, CHK_AI6, CHK_AI7};
 
@@ -534,10 +535,11 @@ namespace pkNX.WinForms
             SaveEntry();
             var moves = Game.Data.MoveData.LoadAll();
             var rmove = new MoveRandomizer(Game.Info, moves, Personal);
-            int[] banned = Legal.GetBannedMoves(Game.Info.Game, moves);
+            int[] banned = Legal.GetBannedMoves(Game.Info.Game, moves.Length);
             rmove.Initialize((MovesetRandSettings)PG_Moves.SelectedObject, banned);
             var rspec = new SpeciesRandomizer(Game.Info, Personal);
             rspec.Initialize((SpeciesSettings)PG_Species.SelectedObject);
+            learn.Moves = moves;
             var trand = new TrainerRandomizer(Game.Info, Personal, Trainers.LoadAll())
             {
                 ClassCount = CB_Trainer_Class.Items.Count,

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using pkNX.Containers;
 using pkNX.Game;
 using pkNX.Randomization;
 using pkNX.Structures;
@@ -219,6 +220,52 @@ namespace pkNX.WinForms.Controls
                 return;
             path = sfd.FileName;
             File.WriteAllText(path, result);
+        }
+
+        public void EditShinyRate()
+        {
+            var path = Path.Combine(ROM.PathExeFS, "main");
+            var data = FileMitm.ReadAllBytes(path);
+            var nso = new NSO(data);
+
+            var shiny = new ShinyRateGG(nso.DecompressedText);
+            if (!shiny.IsEditable)
+            {
+                WinFormsUtil.Alert("Not able to find shiny rate logic in exefs.");
+                return;
+            }
+
+            var editor = new ShinyRate(shiny);
+            editor.ShowDialog();
+            if (!editor.Modified)
+                return;
+
+            nso.DecompressedText = shiny.Data;
+            FileMitm.WriteAllBytes(path, nso.Write());
+        }
+
+        public void EditTM()
+        {
+            var path = Path.Combine(ROM.PathExeFS, "main");
+            var data = FileMitm.ReadAllBytes(path);
+            var list = new TMEditorGG(data);
+            if (!list.Valid)
+            {
+                WinFormsUtil.Alert("Not able to find tm data in exefs.");
+                return;
+            }
+
+            var moves = list.GetMoves();
+            var allowed = Legal.GetAllowedMoves(ROM.Game, ROM.Data.MoveData.Length);
+            var names = ROM.GetStrings(TextName.MoveNames);
+            var editor = new TMList(moves, allowed, names);
+            editor.ShowDialog();
+            if (!editor.Modified)
+                return;
+
+            list.SetMoves(editor.FinalMoves);
+            data = list.Write();
+            FileMitm.WriteAllBytes(path, data);
         }
     }
 }
